@@ -1,0 +1,15 @@
+node_modules/
+dist/
+dist-electron/
+dist-renderer/
+out/
+output/
+.env
+*.tsbuildinfo
+.DS_Store
+*.log
+
+# Private counsellors (copyrighted material)
+council/marx/
+council/rory-sutherland/
+council/seth-godin/

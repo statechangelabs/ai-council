@@ -1,0 +1,59 @@
+{
+  "name": "ai-council",
+  "version": "0.1.0",
+  "description": "CLI tool for orchestrating round-robin AI counsellor discussions",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "bin": {
+    "council": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.tsx",
+    "start": "node dist/cli.js",
+    "dev:gui": "vite",
+    "build:gui": "vite build",
+    "package": "electron-builder"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@excalidraw/excalidraw": "^0.18.0",
+    "@google/genai": "^1.43.0",
+    "@google/generative-ai": "^0.21.0",
+    "@lobehub/icons": "^4.6.0",
+    "autoprefixer": "^10.4.24",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.4.0",
+    "glob": "^11.0.0",
+    "gray-matter": "^4.0.3",
+    "ink": "^5.0.1",
+    "ink-spinner": "^5.0.0",
+    "lucide-react": "^0.575.0",
+    "meow": "^13.2.0",
+    "ollama": "^0.5.0",
+    "openai": "^4.80.0",
+    "postcss": "^8.5.6",
+    "react": "^18.3.1",
+    "react-dom": "18",
+    "react-markdown": "^10.1.0",
+    "tailwind-merge": "^3.5.0",
+    "tailwindcss": "3",
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "18",
+    "@vitejs/plugin-react": "^5.1.4",
+    "concurrently": "^9.2.1",
+    "electron": "^40.6.0",
+    "electron-builder": "^26.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.7.2",
+    "vite": "^7.3.1",
+    "vite-plugin-electron": "^0.29.0",
+    "vite-plugin-electron-renderer": "^0.14.6"
+  }
+}

@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 224 71% 4%;
+    --foreground: 213 31% 91%;
+    --card: 224 71% 6%;
+    --card-foreground: 213 31% 91%;
+    --primary: 210 40% 58%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 222 47% 11%;
+    --secondary-foreground: 213 31% 91%;
+    --muted: 223 47% 11%;
+    --muted-foreground: 215 20% 55%;
+    --accent: 216 34% 17%;
+    --accent-foreground: 213 31% 91%;
+    --destructive: 0 63% 51%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 216 34% 17%;
+    --input: 216 34% 17%;
+    --ring: 210 40% 58%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--muted));
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--muted-foreground));
+}
+
+/* Markdown content styling */
+.prose-council h1, .prose-council h2, .prose-council h3 {
+  @apply font-semibold mt-4 mb-2;
+}
+.prose-council h1 { @apply text-xl; }
+.prose-council h2 { @apply text-lg; }
+.prose-council h3 { @apply text-base; }
+.prose-council p { @apply mb-2 leading-relaxed; }
+.prose-council ul, .prose-council ol { @apply mb-2 pl-6; }
+.prose-council ul { @apply list-disc; }
+.prose-council ol { @apply list-decimal; }
+.prose-council li { @apply mb-1; }
+.prose-council code {
+  @apply bg-muted px-1.5 py-0.5 rounded text-sm font-mono;
+}
+.prose-council pre {
+  @apply bg-muted p-3 rounded-md mb-2 overflow-x-auto;
+}
+.prose-council pre code {
+  @apply bg-transparent p-0;
+}
+.prose-council blockquote {
+  @apply border-l-2 border-primary/40 pl-4 italic text-muted-foreground;
+}
+.prose-council strong { @apply font-semibold; }
+.prose-council a { @apply text-primary underline; }
