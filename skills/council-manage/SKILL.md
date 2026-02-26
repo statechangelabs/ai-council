@@ -11,6 +11,16 @@ metadata:
 
 Manage AI Council counsellors and run discussions from the command line.
 
+## Installation
+
+If `council` is not already installed, install it globally from NPM:
+
+```bash
+npm install -g @statechange/council
+```
+
+Or run commands directly with `npx @statechange/council`.
+
 ## When to Use
 
 - The user wants to create, edit, or delete a counsellor
@@ -59,41 +69,41 @@ You are [name], a [description of role and personality].
 ### List counsellors
 
 ```bash
-bun run dev -- list
-bun run dev -- list --council ./path/to/council/
+council list
+council list --council ./path/to/council/
 ```
 
 ### Run a discussion
 
 ```bash
 # Inline topic
-bun run dev -- discuss "Should we adopt microservices?"
+council discuss "Should we adopt microservices?"
 
 # Topic from file
-bun run dev -- discuss ./topics/architecture.md
+council discuss ./topics/architecture.md
 
 # With options
-bun run dev -- discuss "Topic" --rounds 3 --format md --output ./results
+council discuss "Topic" --rounds 3 --format md --output ./results
 
 # Specific counsellors only
-bun run dev -- discuss "Topic" --counsellors ./council/strategist ./council/critic
+council discuss "Topic" --counsellors ./council/strategist ./council/critic
 ```
 
 ### Manage counsellor registry
 
 ```bash
 # Register a counsellor from a local directory
-bun run dev -- counsellor add ./path/to/counsellor
+council counsellor add ./path/to/counsellor
 
 # Register counsellor(s) from a git repository
-bun run dev -- counsellor add https://github.com/user/some-counsellor.git
+council counsellor add https://github.com/user/some-counsellor.git
 
 # List all registered counsellors
-bun run dev -- counsellor list
+council counsellor list
 
 # Unregister a counsellor (--yes auto-deletes cloned files for git sources)
-bun run dev -- counsellor remove my-counsellor
-bun run dev -- counsellor remove my-counsellor --yes
+council counsellor remove my-counsellor
+council counsellor remove my-counsellor --yes
 ```
 
 Registered counsellors are stored in `~/.ai-council/config.json` under the `counsellors` key. Git-cloned counsellors are placed at `~/.ai-council/counsellors/<name>/`.
@@ -105,9 +115,9 @@ Multi-counsellor repos: if the cloned root has no `ABOUT.md`, child directories 
 ### Check configuration
 
 ```bash
-bun run dev -- config show     # Show backend status
-bun run dev -- config scan     # Find API keys
-bun run dev -- config import   # Import found keys
+council config show     # Show backend status
+council config scan     # Find API keys
+council config import   # Import found keys
 ```
 
 ## Creating a New Counsellor
@@ -116,7 +126,7 @@ To create a new counsellor:
 
 1. Create a directory: `mkdir council/new-counsellor`
 2. Create `council/new-counsellor/ABOUT.md` with the frontmatter and system prompt
-3. Verify with `bun run dev -- list`
+3. Verify with `council list`
 
 ### Building a Counsellor from Source Material
 
@@ -181,22 +191,23 @@ This keeps the authored content (which goes through the LLM) small, and the bulk
 
 Usually means the backend API key is missing. Fix with:
 ```bash
-bun run dev -- config show   # Check which keys are missing
-bun run dev -- config scan   # Look for keys
-bun run dev -- config import # Import found keys
+council config show   # Check which keys are missing
+council config scan   # Look for keys
+council config import # Import found keys
 ```
 
 ### Discussion fails with backend errors
 
-1. Check the backend is configured: `bun run dev -- config show`
+1. Check the backend is configured: `council config show`
 2. For ollama: ensure `ollama serve` is running
 3. For cloud backends: verify the API key is valid and has credits
 
 ## GUI Alternative
 
-All of the above can also be done in the Electron GUI:
+All of the above can also be done in the Electron GUI (requires cloning the repo):
 ```bash
-bun run dev:gui
+git clone https://github.com/statechangelabs/council.git && cd council
+bun install && bun run dev:gui
 ```
 - **Settings page**: Configure API keys, test connections, see available models
 - **Counsellors page**: Browse, create, edit, delete counsellors with a form editor

@@ -11,6 +11,16 @@ metadata:
 
 Find and consolidate AI API keys into the AI Council configuration.
 
+## Installation
+
+If `council` is not already installed, install it globally from NPM:
+
+```bash
+npm install -g @statechange/council
+```
+
+Or run commands directly with `npx @statechange/council`.
+
 ## When to Use
 
 - The user asks to set up or configure AI Council
@@ -25,7 +35,7 @@ Find and consolidate AI API keys into the AI Council configuration.
 Run the config show command to see what's already configured:
 
 ```bash
-bun run dev -- config show
+council config show
 ```
 
 This shows each backend (anthropic, openai, google, ollama) and whether it has a key from the config file or environment.
@@ -35,7 +45,7 @@ This shows each backend (anthropic, openai, google, ollama) and whether it has a
 Run the built-in scanner to check env files and shell profiles:
 
 ```bash
-bun run dev -- config scan
+council config scan
 ```
 
 This searches:
@@ -58,7 +68,7 @@ grep -r "ANTHROPIC_API_KEY\|OPENAI_API_KEY\|GOOGLE_API_KEY\|GEMINI_API_KEY" \
 If additional files are found, pass them to the scanner:
 
 ```bash
-bun run dev -- config scan /path/to/found/.env /other/path/.env
+council config scan /path/to/found/.env /other/path/.env
 ```
 
 ### 4. Import discovered keys
@@ -66,13 +76,13 @@ bun run dev -- config scan /path/to/found/.env /other/path/.env
 Once you've confirmed which keys are available, import them:
 
 ```bash
-bun run dev -- config import
+council config import
 ```
 
 Or with additional paths:
 
 ```bash
-bun run dev -- config import /path/to/extra/.env
+council config import /path/to/extra/.env
 ```
 
 This writes keys to `~/.ai-council/config.json`, skipping any backend that already has a key configured.
@@ -82,7 +92,7 @@ This writes keys to `~/.ai-council/config.json`, skipping any backend that alrea
 Run show again to confirm all backends are configured:
 
 ```bash
-bun run dev -- config show
+council config show
 ```
 
 ### 6. Report to the user
