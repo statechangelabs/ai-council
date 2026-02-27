@@ -206,7 +206,7 @@ council config import # Import found keys
 
 All of the above can also be done in the Electron GUI (requires cloning the repo):
 ```bash
-git clone https://github.com/statechangelabs/council.git && cd council
+git clone https://github.com/statechangelabs/ai-council.git && cd council
 bun install && bun run dev:gui
 ```
 - **Settings page**: Configure API keys, test connections, see available models
