@@ -10,6 +10,8 @@ import { ListCommand } from "./commands/list.js";
 import { ConfigCommand } from "./commands/config.js";
 import { CounsellorCommand } from "./commands/counsellor.js";
 import { HistoryCommand } from "./commands/history.js";
+import { GuiCommand } from "./commands/gui.js";
+import { InstallCommand } from "./commands/install.js";
 
 const cli = meow(
   `
@@ -24,6 +26,9 @@ const cli = meow(
     counsellor add <path-or-url>  Register a counsellor from a local path or git URL
     counsellor remove <id>        Unregister a counsellor (--yes to delete cloned files)
     counsellor list               List all registered counsellors
+    gui                    Launch the Electron GUI
+    install                Install AI Council as a macOS application
+    install --uninstall    Remove AI Council from Applications
     config show            Show current configuration and key status
     config scan [paths..]  Scan for API keys in env files and shell profiles
     config import [paths..]  Import discovered keys into ~/.ai-council/config.json
@@ -97,6 +102,10 @@ const cli = meow(
         shortFlag: "y",
         default: false,
       },
+      uninstall: {
+        type: "boolean",
+        default: false,
+      },
     },
   },
 );
@@ -165,6 +174,14 @@ switch (command) {
     );
     break;
   }
+
+  case "gui":
+    render(<GuiCommand />);
+    break;
+
+  case "install":
+    render(<InstallCommand uninstall={cli.flags.uninstall} />);
+    break;
 
   case "config": {
     const sub = cli.input[1];
