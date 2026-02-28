@@ -9,8 +9,6 @@ import { getCounsellorIssues } from "../lib/counsellor-issues";
 import type { CounsellorSummary } from "../council-api";
 import type { CouncilConfig } from "../../types";
 
-const DEFAULT_COUNCIL_DIR = "./council";
-
 export function CounsellorsPage() {
   const [counsellors, setCounsellors] = useState<CounsellorSummary[]>([]);
   const [config, setConfig] = useState<CouncilConfig>({ backends: {} });
@@ -18,10 +16,13 @@ export function CounsellorsPage() {
   const [editing, setEditing] = useState<{ dirPath: string | null; isNew: boolean } | null>(null);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [search, setSearch] = useState("");
+  const [councilDir, setCouncilDir] = useState<string>("./council");
 
   const reload = useCallback(async () => {
+    const dir = await window.councilAPI.getCouncilDir();
+    setCouncilDir(dir);
     const [list, configResult] = await Promise.all([
-      window.councilAPI.listCounsellors(DEFAULT_COUNCIL_DIR),
+      window.councilAPI.listCounsellors(dir),
       window.councilAPI.getConfig(),
     ]);
     setCounsellors(list);
@@ -33,7 +34,7 @@ export function CounsellorsPage() {
 
   const handleSave = async (dirPath: string | null, id: string, aboutMd: string) => {
     if (editing?.isNew) {
-      await window.councilAPI.createCounsellor(DEFAULT_COUNCIL_DIR, id, aboutMd);
+      await window.councilAPI.createCounsellor(councilDir, id, aboutMd);
     } else if (dirPath) {
       await window.councilAPI.saveCounsellor(dirPath, aboutMd);
     }
@@ -122,7 +123,7 @@ export function CounsellorsPage() {
       <div className="flex-1 overflow-y-auto p-6 pt-4">
         {counsellors.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-muted-foreground/50 gap-2">
-            <p className="text-sm">No counsellors found in {DEFAULT_COUNCIL_DIR}/</p>
+            <p className="text-sm">No counsellors found in {councilDir}/</p>
             <Button variant="outline" size="sm" onClick={() => setEditing({ dirPath: null, isNew: true })}>
               Create your first counsellor
             </Button>

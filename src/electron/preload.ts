@@ -1,6 +1,9 @@
 import { contextBridge, ipcRenderer } from "electron";
 
 const councilAPI = {
+  getCouncilDir: () =>
+    ipcRenderer.invoke("app:getCouncilDir") as Promise<string>,
+
   listCounsellors: (councilDir: string) =>
     ipcRenderer.invoke("counsellors:list", councilDir),
 

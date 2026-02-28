@@ -45,6 +45,7 @@ export type DiscussionEvent =
   | { type: "infographic_error"; error: string };
 
 export interface CouncilAPI {
+  getCouncilDir(): Promise<string>;
   listCounsellors(councilDir: string): Promise<CounsellorSummary[]>;
   getCounsellor(dirPath: string): Promise<CounsellorDetail>;
   saveCounsellor(dirPath: string, aboutMd: string): Promise<{ success: boolean }>;

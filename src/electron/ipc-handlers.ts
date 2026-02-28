@@ -2,7 +2,7 @@ import { dialog, shell, type BrowserWindow, type IpcMain } from "electron";
 import { readFile, writeFile, mkdir, rm, readdir, stat } from "node:fs/promises";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { join, basename } from "node:path";
+import { join, basename, resolve } from "node:path";
 import { homedir } from "node:os";
 import matter from "gray-matter";
 import { loadCounsellors } from "../core/counsellor-loader.js";
@@ -133,6 +133,13 @@ export function registerIpcHandlers(
   ipcMain: IpcMain,
   getWindow: () => BrowserWindow | null,
 ) {
+  // --- App info ---
+
+  ipcMain.handle("app:getCouncilDir", async () => {
+    const cwd = process.env.COUNCIL_CWD || homedir();
+    return resolve(cwd, "council");
+  });
+
   // --- Counsellor CRUD ---
 
   ipcMain.handle("counsellors:list", async (_event, councilDir: string) => {

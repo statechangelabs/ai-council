@@ -5,7 +5,11 @@ import { fileURLToPath } from "node:url";
 import { resolve, dirname } from "node:path";
 import { existsSync } from "node:fs";
 
-export function GuiCommand() {
+interface Props {
+  path?: string;
+}
+
+export function GuiCommand({ path }: Props) {
   const [status, setStatus] = useState<string>("Locating Electron...");
   const [error, setError] = useState<string | null>(null);
 
@@ -54,9 +58,11 @@ export function GuiCommand() {
 
       // Spawn electron as a detached process so the CLI can exit
       setStatus("Launching AI Council GUI...");
+      const councilCwd = path ? resolve(path) : process.cwd();
       const child = spawn(electronPath, [mainJs], {
         detached: true,
         stdio: "ignore",
+        env: { ...process.env, COUNCIL_CWD: councilCwd },
       });
       child.unref();
 

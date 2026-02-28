@@ -15,8 +15,6 @@ import { cn } from "../lib/utils";
 import type { CounsellorSummary } from "../council-api";
 import type { CouncilConfig } from "../../types";
 
-const DEFAULT_COUNCIL_DIR = "./council";
-
 export function DiscussionPage() {
   const [topic, setTopic] = useState("");
   const [attachments, setAttachments] = useState<Attachment[]>([]);
@@ -31,14 +29,18 @@ export function DiscussionPage() {
   const [isInstallingMarkitdown, setIsInstallingMarkitdown] = useState(false);
   const [selectedInfographics, setSelectedInfographics] = useState<Set<"openai" | "google">>(new Set());
   const [mode, setMode] = useState<"freeform" | "debate">("freeform");
+  const [councilDir, setCouncilDir] = useState<string>("./council");
 
   const discussion = useDiscussion();
 
   useEffect(() => {
     Promise.all([
-      window.councilAPI.listCounsellors(DEFAULT_COUNCIL_DIR),
+      window.councilAPI.getCouncilDir(),
       window.councilAPI.getConfig(),
-    ]).then(([list, configResult]) => {
+    ]).then(([dir, configResult]) => {
+      setCouncilDir(dir);
+      return window.councilAPI.listCounsellors(dir).then((list) => [list, configResult] as const);
+    }).then(([list, configResult]) => {
       setCounsellors(list);
       setConfig(configResult.config);
       setEnvStatus(configResult.envStatus);
@@ -99,7 +101,7 @@ export function DiscussionPage() {
     discussion.start({
       topic: fullTopic,
       topicSource: "inline",
-      councilDir: DEFAULT_COUNCIL_DIR,
+      councilDir,
       counsellorIds: selectedIds.size === counsellors.length ? undefined : Array.from(selectedIds),
       rounds,
       infographicBackends: selectedInfographics.size > 0 ? Array.from(selectedInfographics) : undefined,

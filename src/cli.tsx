@@ -176,7 +176,7 @@ switch (command) {
   }
 
   case "gui":
-    render(<GuiCommand />);
+    render(<GuiCommand path={cli.input[1]} />);
     break;
 
   case "install":

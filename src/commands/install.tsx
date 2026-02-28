@@ -144,6 +144,7 @@ if [ ! -f "$ELECTRON" ]; then
   exit 1
 fi
 
+export COUNCIL_CWD="$HOME"
 exec "$ELECTRON" "$MAIN_JS"
 `;
         const launcherPath = resolve(macosDir, "council");

@@ -92,15 +92,20 @@ export function HistoryPage() {
 
   const handleSelect = async (id: string) => {
     try {
-      const [result, counsellors] = await Promise.all([
-        window.councilAPI.getHistoryEntry(id),
-        window.councilAPI.listCounsellors("./council"),
-      ]);
-      setAvatarMap(Object.fromEntries(counsellors.map(c => [c.name, c.avatarUrl])));
+      const result = await window.councilAPI.getHistoryEntry(id);
       setDetail(result);
       setSelectedId(id);
+
+      // Avatars are nice-to-have — don't block navigation if this fails
+      try {
+        const dir = await window.councilAPI.getCouncilDir();
+        const counsellors = await window.councilAPI.listCounsellors(dir);
+        setAvatarMap(Object.fromEntries(counsellors.map(c => [c.name, c.avatarUrl])));
+      } catch {
+        /* avatar lookup failed — detail view still works */
+      }
     } catch {
-      /* ignore */
+      /* history entry not found */
     }
   };
 
