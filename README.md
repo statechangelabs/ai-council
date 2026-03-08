@@ -7,7 +7,7 @@ Build a council of AI personas and have them debate any topic. Each councilor ha
 The fastest path is to add the skills to [Claude Code](https://claude.com/claude-code). They handle installation, configuration, councilor creation, and running discussions for you.
 
 ```bash
-npx skills add statechangelabs/ai-council
+npx skills add statechange/ai-council
 ```
 
 This gives you two skills:
@@ -92,7 +92,7 @@ The Electron app gives you a visual interface with real-time streaming, point-an
 
 ```bash
 # From the cloned repo
-git clone https://github.com/statechangelabs/ai-council.git
+git clone https://github.com/statechange/ai-council.git
 cd ai-council
 bun install
 bun run dev:gui
@@ -223,7 +223,7 @@ Errors are logged to `~/.ai-council/council.log` with timestamps, context tags, 
 ## Development
 
 ```bash
-git clone https://github.com/statechangelabs/ai-council.git
+git clone https://github.com/statechange/ai-council.git
 cd ai-council
 bun install
 
